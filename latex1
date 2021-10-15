@@ -1,0 +1,177 @@
+\documentclass[14pt, a4paper]{extreport}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, top=2cm, bottom=2cm, left=3cm, right=1cm]{geometry}
+\linespread{1,5}
+\usepackage[english, russian]{babel}
+\usepackage{mathtools, amsfonts}
+    \numberwithin{equation}{section}
+\usepackage{graphicx}
+\usepackage{fontspec}
+    \setmainfont{Times New Roman}
+\usepackage{titlesec}
+    \titleformat{\section}[block]{\normalsize\centering\bfseries}{\thesection}{1ex}{}
+    \titleformat{\subsection}[block]{\normalsize\centering\bfseries}{\thesubsection}{1ex}{}
+\usepackage{fancyhdr} % колонтитулы
+    \pagestyle{fancy}
+    \fancyhead[C]{\thepage}
+    \fancyhead[L]{}
+    \fancyhead[R]{}
+    \fancyfoot[C]{}
+    \renewcommand{\headrulewidth}{0cm}
+    \fancypagestyle{first}
+    {
+         \fancyfoot[C]{Томск 2021}
+         \renewcommand{\headrulewidth}{0cm}
+         \fancyhead[C]{}
+    }
+\renewcommand*\thesection{\arabic{section}}
+ 
+ 
+\begin{document}
+    %Титульный лист
+    \begin{titlepage}
+        \begin{center}
+            {Министерство науки и высшего образования Российской Федерации \\ Федеральное государственное бюджетное образовательное учреждение высшего образования\\}
+            { Томский государственный университет систем управления и радиоэлектроники (ТУСУР)\\}
+            {Кафедра комплексной информационной безопасности электронно-вычислительных систем (КИБЭВС)\\}
+            \vspace{1cm}
+            {ПРИМЕНЕНИЕ СИСТЕМЫ КОМПЬЮТЕРНОЙ ВЕРСТКИ ДОКУМЕНТОВ LaTeX\\}
+            {Отчет по лабораторной работе по дисциплине «Численные методы»}
+        \end{center}
+        \vspace{3cm}
+        
+        \begin{flushright}
+            Студент гр. 740-1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+            \_\_\_\_\_\_\_\_ Эрин Ф.А\ \ \ \ \ \ \ \ \ \ \ \ \\
+            \_\_\_\_\_\_\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+            \ \\
+           Руководитель\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+           Доцент кафедры КИБЭВС\\
+           \_\_\_\_\_\_\_\_\ \ \ \ \ \_\_\_\_\_\_\_\_Якимук А. Ю.\ \ \ \ \ \ \\
+          \_\_\_\_\_\_\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+        \end{flushright}
+        
+        \thispagestyle{first}
+            
+    \end{titlepage}
+    \setcounter{page}{2}
+    %Задание
+    \begin{center}
+        \bfseries{Задание}
+    \end{center}
+        \parindent=1.25cm
+ 
+    Необходимо оформить отчет согласно ОС ТУСУР 2013 г. используя систему компьютерной верстки LaTeX. Отчет должен содержать формулы, рисунок и таблицу.
+    Отчет должен содержать титульный лист и следующие разделы: «Задание», «Введение», «Ход работы», «Заключение» и «Приложение».
+    \newpage
+    \begin{center}
+        \section{Введение}
+    \end{center}
+    \parindent=1.25cm
+    
+    Цель работы - получить знания и навыки работы с системой компьютерной верстки LaTeX для дальнейшей обработки отчетов в этой системе.
+    \newpage
+    
+    
+    %Ход работы
+    \begin{center}
+        \section{Ход работы}
+    \end{center}
+    \parindent=1.25cm
+    
+    Данная работа выполнялась в веб-редакторе Overleaf. Код представлен в приложении А.
+    
+    \begin{center}
+        \subsection{Формулы}
+    \end{center}
+    
+    %Первая формула
+    \begin{center}
+        \begin{math}
+            A_{i,j} = 
+            \begin{bmatrix} 
+                \frac{\partial^2F_{1}(x,y)}{\partial x^2}
+            \end{bmatrix}^\frac{1}{2}
+        \end{math}\\
+    \end{center}
+    
+    %Вторая формула
+    \begin{center}
+        \begin{math}
+            \lim\limits_{\varepsilon \to \infty} \int_{0}^{A - \varepsilon} exp\left\{\frac{(\varepsilon W)^2}{2}\Delta t\right\} \,d\Phi(W) = \frac{1}{\sqrt{2\pi}}·\sin{A} при = \overline{1,\infty}
+        \end{math}
+    \end{center}
+    
+    %Третья формула
+    \begin{equation}\label{2.1}
+            {\Delta A} = \begin{vmatrix}
+                a_{11} & \cdots & a_{1N}\\
+                \cdots & \cdots & \cdots\\
+                a_{N1} & \cdots & a_{NN}
+            \end{vmatrix}
+    \end{equation}
+        
+    %Четвертая формула
+    \begin{equation}\label{2.2}
+        \delta_{ij} =
+            \begin{cases}
+                0, & если i \neq j,\\
+                1, & если i = j.
+            \end{cases}
+    \end{equation}\\
+    
+    %Ссылки
+    Формулы: \eqref{2.1} и \eqref{2.2}
+    
+    \begin{center}
+        \subsection{Изображение}
+    \end{center}
+    
+    В данном разделе представлена вставка изображения.
+    Пример вставленного изображения представлен на рисунке 2.1.
+    \begin{center}
+            \includegraphics[scale=0.5]{1.jpg}\\
+            Рисунок 2.1 - Изображение
+    \end{center}
+    
+    %Таблица
+    \begin{center}
+        \subsection{Таблица}
+    \end{center}
+    
+    Данный раздел посвящен  созданию таблиц. Ниже представлена таблица смежности для некоторых городов А-Г(Таблица 2.1)
+    \begin{flushleft}
+        \textit{Таблица 2.1 - Таблица смежности городов}\\
+        \begin{tabular}{ |c|c|c|c|c| } 
+            \hline
+            Города & А & Б & В & Г\\
+            \hline
+            \hline
+            А & 1 & 0 & 1 & 1\\ 
+            \hline
+            Б & 0 & 1 & 0 & 0\\
+            \hline
+            В & 1 & 0 & 1 & 0\\
+            \hline
+            Г & 1 & 0 & 0 & 1 \\
+            \hline
+        \end{tabular}
+    \end{flushleft}
+    
+    \newpage
+    \begin{center}
+        \section{Заключение}
+    \end{center}
+    
+    В результате работы были получены навыки работы с системой компьютерной вёрстки LaTeX. Также был получен опыт работы в онлайн-редакторе Overleaf.
+    \newpage
+    \begin{center}
+        Приложение А\\
+        (Обязательное)\\
+        Код LaTeX
+    \end{center}
+    
+    Кот доступен по ссылке на GitHub: \href{}{}
+    
+\end{document}
