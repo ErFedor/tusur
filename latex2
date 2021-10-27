@@ -1,0 +1,322 @@
+\documentclass[14pt, a4paper]{extreport}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage[a4paper, top=2cm, bottom=2cm, left=3cm, right=1cm]{geometry}
+\linespread{1,5}
+\usepackage[english, russian]{babel}
+\usepackage{mathtools, amsfonts}
+    \numberwithin{equation}{section}
+\usepackage{graphicx}
+\usepackage{fontspec}
+    \setmainfont{Times New Roman}
+\usepackage{titlesec}
+\usepackage{listings}
+
+
+
+    \titleformat{\section}[block]{\normalsize\centering\bfseries}{\thesection}{1ex}{}
+    \titleformat{\subsection}[block]{\normalsize\centering\bfseries}{\thesubsection}{1ex}{}
+\usepackage{fancyhdr} % колонтитулы
+    \pagestyle{fancy}
+    \fancyhead[C]{\thepage}
+    \fancyhead[L]{}
+    \fancyhead[R]{}
+    \fancyfoot[C]{}
+    \renewcommand{\headrulewidth}{0cm}
+    \fancypagestyle{first}
+    {
+         \fancyfoot[C]{Томск 2021}
+         \renewcommand{\headrulewidth}{0cm}
+         \fancyhead[C]{}
+    }
+\renewcommand*\thesection{\arabic{section}}
+
+\renewcommand{\contentsname}{\centering Contents}
+
+ \setlength{\cftbeforetoctitleskip}{-2em}
+\begin{document}
+    %Титульный лист
+    \begin{titlepage}
+        \begin{center}
+            {Министерство науки и высшего образования Российской Федерации \\ Федеральное государственное бюджетное образовательное учреждение высшего образования\\}
+            { Томский государственный университет систем управления и радиоэлектроники (ТУСУР)\\}
+            {Кафедра комплексной информационной безопасности электронно-вычислительных систем (КИБЭВС)\\}
+            \vspace{2cm}
+            {ЧИСЛЕННОЕ РЕШЕНИЕ СЛАУ\\}
+            {Отчет по лабораторной работе по дисциплине «Численные методы»}
+        \end{center}
+        \vspace{3cm}
+        
+        \begin{flushright}
+            Студент гр. 740-1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+            \_\_\_\_\_\_\_\_ Эрин Ф.А\ \ \ \ \ \ \ \ \ \ \ \ \\
+            \_\_\_\_\_\_\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+            \ \\
+           Руководитель\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+           Доцент кафедры КИБЭВС\\
+           \_\_\_\_\_\_\_\_\ \ \ \ \ \_\_\_\_\_\_\_\_Якимук А. Ю.\ \ \ \ \ \ \\
+          \_\_\_\_\_\_\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+        \end{flushright}
+        
+        \thispagestyle{first}
+            
+    \end{titlepage}
+    \setcounter{page}{2}
+    %Задание
+    \begin{center}
+        \bfseries{Задание}
+    \end{center}
+        \parindent=1.25cm
+ 
+    Необходимо разработать программы, реализующие метод простых итераций и метод Зейделя, и найти решение индивидуальной системы уравнений с помощью полученных программ.
+    
+    Также необходимо оформить отчет согласно ОС ТУСУР 2013 г. используя систему компьютерной верстки LaTeX.
+    
+    \newpage
+    \titleformat{\chapter}{\normalfont\large\bfseries\centering}{\thechapter}{16pt}{\large\bfseries}
+    \tableofcontents
+
+
+    \newpage
+    \begin{center}
+        \section{Введение}
+    \end{center}
+    \parindent=1.25cm
+    
+    Цель работы - получить навыки работы с языком программирования Python в среде разработки PyCharm и составить две программы для решения СЛАУ методами Якоби (метод простых итераций) и методом Зейделя.
+    \newpage
+    
+    
+    %Ход работы
+    \begin{center}
+        \section{Ход работы}
+    \end{center}
+    \parindent=1.25cm
+    
+    Код программ для метода Якоби и метода Зейделя представлены в приложении А и Б соответственно.\\
+    
+    
+    \begin{center}
+        \subsection{Преобразование системы}
+    \end{center}
+    
+    \parindent=1.25cm
+    Исходная система имеет следующий вид:
+    
+    \begin{equation}\label{2.1}
+        \begin{cases}
+            $$a_{11}x_1+a_{12}x_2+a_{13}x_3=b_1,\\
+              a_{21}x_1+a_{22}x_2+a_{23}x_3=b_2,\\
+              a_{31}x_1+a_{32}x_2+a_{33}x_3=b_3.
+            $$
+        \end{cases}
+    \end{equation}\\
+    
+    \parindent=1.25cm
+    
+    Сначала в каждой строчке системы выделяется соответствующий этой строчке $x$, а остальные слагаемые переносятся в правую часть.
+    \begin{equation}\label{2.2}
+        \begin{cases}
+            $$x_1=\frac{b_1}{a_{11}} -\frac{a_{12}x_2}{a_{11}}-\frac{a_{13}x_3}{a_{11}},\\
+             x_2=\frac{b_2}{a_{22}} -\frac{a_{21}x_1}{a_{22}}-\frac{a_{23}x_3}{a_{22}},\\
+             x_3=\frac{b_3}{a_{33}} -\frac{a_{31}x_1}{a_{33}}-\frac{a_{32}x_2}{a_{33}}.
+            $$
+        \end{cases}
+    \end{equation}\\
+    
+    \parindent=1.25cm
+    Далее, из системы \eqref{2.2} для каждой строки можно вывести общую формулу.
+    
+    \begin{center}
+        \begin{equation}\label{2.3}
+            x_i = \frac{b_i}{a_i_i}-\frac{1}{a_i_i}\sum\limits_{i=1}^n a_{ij}x_i, {i\neq j}
+        \end{equation}
+    \end{center}
+    
+    \parindent=1.25cm
+    Формула \eqref{2.3} будет непосредственно использоваться в коде программы.
+    
+    \begin{center}
+        \subsection{Программирование}
+    \end{center}
+    
+    \parindent=1.25cm
+    Алгоритм нахождения решения для метода Якоби представлен на рисунке 2.1.
+    
+    \begin{center}
+            \includegraphics[scale=0.8]{4.png}\\
+            Рисунок 2.1 - Нахождение решения метод Якоби
+    \end{center}
+    
+    \parindent=1.25cm
+    Сначала задается начальный вектор приближения корней $x$, устанавливается счетчик итераций и максимальное количество итераций(это необходимо для того чтобы предотвратить зацикливание программы). В качестве начального приближения корней в методе Якоби был выбран вектор из свободных членов преобразованной матрицы $\frac{b_i}{a_i_i}$. В цикле, ограниченном максимальным количеством итераций, в начале задается вектор, хранящий значения предыдущей итерации x\textunderscore prev. Далее идет перебор всех элементов системы кроме $x$, что лежат на главной диагонали (они выражены в правой части). S это сумма произведения коэффициентах при $x$ и сами $x$: $\sum\limits_{i=1}^n a_{ij}x_i$.
+    
+    \parindent=1.25cm
+    На 38 строке на рисунке 2.1 расположена вышепредставленная формула \eqref{2.3}.
+    Далее идет проверка условия останова. Фрагмент кода с условием останова представлен на рисунке 2.2.
+    \begin{center}
+            \includegraphics[scale=1]{5.png}\\
+            Рисунок 2.2 - Условие останова
+    \end{center}
+    
+    Условие останова представляет из себя функцию на вход которой передаются два вектора - вектор нового решения и решения на предыдущей итерации. Далее находится нормирование разности векторов нового решения и предыдущей итерации и сравнивается с заданным значением точности Е. После этого программа завершает работу, выводя на экран решение и количество итераций.
+    
+    \parindent=1.25cm
+    Метод Зейделя является модификацией для метода простых итераций. Отличие заключается в том, что в течение одной и той же итерации при вычислении последующих уравнений используются значения переменных, полученные из предыдущих уравнений. Решение метода Зейделя в программном виде представлено на рисунке 2.3.
+      \begin{center}
+            \includegraphics[scale=1]{3.png}\\
+            Рисунок 2.3 - Метод Зейделя
+    \end{center}
+    
+    \parindent=1.25cm
+    Из рисунка видно, что вектор предыдущих значений обновляется не каждую итерацию, а каждую строку. В остальном метод Зейделя аналогичен методу Якоби.
+    
+    %Таблица
+    \begin{center}
+        \subsection{Результаты работы программ}
+    \end{center}
+    Результаты работы программ представлены в таблице 2.1 и на рисунках 2.2 и 2.3.
+        \begin{center}
+            \includegraphics[scale=0.8]{2.png}\\
+            Рисунок 2.2 - Вывод первой программы(метод Якоби)
+    \end{center}
+            \begin{center}
+            \includegraphics[scale=0.8]{1.png}\\
+            Рисунок 2.3 - Вывод второй программы(метод Зейделя)
+    \end{center}
+    
+    \begin{flushleft}
+        \textit{Таблица 2.1 - Результаты работы программ}\\
+        \begin{table}[h]
+        \begin{tabular}{ |c|c|c|c| } 
+            \hline
+             & Решение & Начальная точка & Число\\&&&итераций\\
+            \hline
+            \hline
+            Метод Якоби & [0.4805,-0.5611,-0.0266]&[-0.5248,-0.3731,-0.3048] & 6\\ 
+            \hline
+            \hline
+            Метод Зейделя & [0.4803, -0.5609, -0.0268]&[0, 0, 0] & 6\\
+            \hline
+        \end{tabular}
+        \end{table}
+    \end{flushleft}
+    
+    \parindent=1.25cm
+    Можно заметить, что значения полученных решений двух методов незначительно отличаются.
+    \newpage
+    \begin{center}
+        \section{Заключение}
+    \end{center}
+    
+    В результате работы были получены навыки работы с языком программирования Python в среде разработки PyCharm и составлены две программы для решения СЛАУ методами Якоби (метод простых итераций) и методом Зейделя. Также был получен опыт работы в онлайн-редакторе Overleaf.
+    
+    \newpage
+    \begin{center}
+        Приложение А\\
+        (Обязательное)\\
+        Код программы методом Якоби
+    \end{center}
+    \begin{lstlisting}
+from math import sqrt
+
+def Ostanova(x_old, x_new):
+    sum = 0
+    # нормирование вектора
+    for i in range(0, 3):
+        sum += (x_new[i] - x_old[i]) ** 2
+    return sqrt(sum) < E
+
+a = [[-12.1, -9.25, -2.46],
+     [-6.76, -17.02, -1.82],
+     [6.33, -9.97, -20.83]]
+
+b = [-0.56, 6.35, 9.19]
+
+# a = [[100, 2, 3],
+#     [1, 100, 3],
+#     [1, 2, 100]]
+# b = [105, 104, 103]
+
+E = 0.001
+
+# ОСНОВНАЯ ЧАСТЬ
+# начальное приближение корней (равен вектору свободных членов преобразованной матрицы)
+# x = [0, 0, 0]
+x = [b[1]/a[i][i] for i in range(0, len(b))]
+print(x)
+iterations = 0
+maxiter = 999
+
+while (iterations < maxiter):
+    x_prev = [x[i] for i in range(0, len(x))] #предыдущая итерация
+    for i in range(3):
+        S = 0
+        for j in range(3):
+            if (j != i):
+                S += a[i][j] * x[j]
+        x[i] = b[i] / a[i][i] - S / a[i][i]
+    if Ostanova(x_prev, x):
+        break
+    iterations += 1
+
+print('Количество итераций: ', iterations)
+print('Решение системы: ', x)
+    \end{lstlisting}
+
+
+\newpage
+\begin{center}
+    Приложение Б\\
+    (Обязательное)\\
+    Код программы методом Зейделя
+\end{center}
+\begin{lstlisting}
+from math import sqrt
+
+def Ostanova(x_old, x_new):
+    sum = 0
+    # нормирование вектора
+    for i in range(0, 3):
+        sum += (x_new[i] - x_old[i]) ** 2
+    return sqrt(sum) < E
+
+a = [[-12.1, -9.25, -2.46],
+     [-6.76, -17.02, -1.82],
+     [6.33, -9.97, -20.83]]
+
+b = [-0.56, 6.35, 9.19]
+
+# a = [[100, 2, 3],
+#     [1, 100, 3],
+#     [1, 2, 100]]
+# b = [105, 104, 103]
+
+E = 0.001
+
+# ОСНОВНАЯ ЧАСТЬ
+# начальное приближение корней (равен вектору свободных членов преобразованной матрицы)
+x = [0, 0, 0]
+iterations = 0
+maxiter = 999
+x_prev = [x[i] for i in range(0, len(x))]
+while (iterations < maxiter):
+     #предыдущая итерация
+    for i in range(3):
+        S = 0
+        for j in range(3):
+            x_prev = [x[j] for j in range(0, len(x))]
+            if (j != i):
+                S += a[i][j] * x[j]
+        x[i] = b[i] / a[i][i] - S / a[i][i]
+    if Ostanova(x_prev, x):
+        break
+    iterations += 1
+
+print(' Количество  итераций: ', iterations)
+print(' Решение  системы: ', x)
+\end{lstlisting}
+
+
+\end{document}
